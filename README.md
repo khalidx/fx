@@ -52,8 +52,10 @@ At the bottom of the `src/cdk.ts` file, just configure the paths to your lambda 
 
 ## Support
 
-That's all there is to it! Report any bugs in
-the GitHub Issues tab.
+That's all there is to it!
 
-Thanks for reading, and for making it all the way
-down here!
+Open a GitHub issue to ask a question, report a bug, raise a concern, or request a new feature.
+
+Also, your question may already be answered on the following [Hacker News thread](https://news.ycombinator.com/item?id=25236969).
+
+Thanks for reading, and for making it all the way down here!

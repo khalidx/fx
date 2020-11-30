@@ -38,6 +38,32 @@ const queue =
     }
   }
 
+const table =
+  (lambdaFn: ReturnType<ReturnType<ReturnType<ReturnType<typeof lambdaFunction>>>>) =>
+  (q: ReturnType<ReturnType<ReturnType<typeof queue>>>) =>
+  (props?: Partial<TableProps>) =>
+  (scope: Construct) => {
+    const tableResource = new Table(scope, `TableForLambdaFunction${lambdaFn.functionName}`, {
+      partitionKey: { name: 'id', type: AttributeType.STRING },
+      stream: StreamViewType.NEW_IMAGE,
+      ...props
+    })
+    tableResource.grantReadWriteData(lambdaFn.functionResource)
+    lambdaFn.functionResource.addEventSource(new DynamoEventSource(tableResource, {
+      startingPosition: StartingPosition.TRIM_HORIZON,
+      maxRecordAge: Duration.days(7),
+      maxBatchingWindow: Duration.seconds(0),
+      parallelizationFactor: 1,
+      batchSize: 10,
+      bisectBatchOnError: true,
+      onFailure: new SqsDlq(q.queueResource),
+      retryAttempts: 10
+    }))
+    return {
+      tableResource
+    }
+  }
+
 const httpApi =
   (lambdaFns: Array<ReturnType<ReturnType<ReturnType<ReturnType<typeof lambdaFunction>>>>>) =>
   (props?: Partial<HttpApiProps>) =>
@@ -91,13 +117,15 @@ const domain =
   }
 
 export const func =
-  (filename: Parameters<typeof lambdaFunction>[0], implementation = { lambdaFunction, queue }) =>
+  (filename: Parameters<typeof lambdaFunction>[0], implementation = { lambdaFunction, queue, table }) =>
   (scope: Construct) => {
     const fn = implementation.lambdaFunction(filename)('handler')()(scope)
     const q = implementation.queue(fn)()(scope)
+    const t = implementation.table(fn)(q)()(scope)
     return {
       fn,
-      q
+      q,
+      t
     }
   }
 

@@ -5,7 +5,9 @@
     "deploy:cdk": "run-s deploy:cdk:*",
     "deploy:cdk:clean": "rimraf cdk.out/",
     "deploy:cdk:run": "cdk --app \"npx ts-node src/cdk.ts\" deploy",
-    "deploy:cdk:success": "echo \"deploy:cdk completed successfully\""
+    "deploy:cdk:success": "echo \"deploy:cdk completed successfully\"",
+    "diff": "run-s diff:cdk",
+    "diff:cdk": "cdk --app \"npx ts-node src/cdk.ts\" diff"
   },
   "dependencies": {
     "express": "^4.17.1",

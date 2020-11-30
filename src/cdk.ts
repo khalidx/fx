@@ -158,6 +158,17 @@ export const func =
     }
   }
 
+const environment =
+  (funcs: Array<ReturnType<ReturnType<typeof func>>>) =>
+  (b: ReturnType<ReturnType<ReturnType<typeof bucket>>>) => {
+    funcs.forEach(func => {
+      func.fn.functionResource.addEnvironment('AWS_DYNAMODB_TABLE_NAME', func.t.tableResource.tableName)
+      func.fn.functionResource.addEnvironment('AWS_S3_BUCKET_NAME', b.bucketResource.bucketName)
+      func.fn.functionResource.addEnvironment('AWS_S3_BUCKET_PREFIX', `/${func.fn.functionName}/`)
+    })
+    return {}
+  }
+
 /**
  * Easily spins up a stack of Lambda Functions, each built from a TypeScript file,
  * with a bunch of event sources out of the box.
@@ -184,11 +195,14 @@ export const infrastructure =
     const fns = functions.map(fn => fn(stack))
     const api = implementation.httpApi(fns.map(fn => fn.fn))(domain?.httpApiProps)(stack)
     const bucket = implementation.bucket(fns.map(fn => fn.fn))()(stack)
+    const environment = implementation.environment(fns)(bucket)
     return {
-      stack,
-      fns,
+      domain,
       api,
-      domain
+      fns,
+      environment,
+      bucket,
+      stack
     }
   }
 

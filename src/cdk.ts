@@ -76,11 +76,18 @@ const httpApi =
       const lambdaProxyIntegration = new LambdaProxyIntegration({
         handler: lambdaFn.functionResource
       })
-      const httpRoutes = httpApi.addRoutes({
-        path: `/${lambdaFn.functionName}`,
-        methods: [ HttpMethod.ANY ],
-        integration: lambdaProxyIntegration,
-      })
+      const httpRoutes = [
+        httpApi.addRoutes({
+          path: `/${lambdaFn.functionName}`,
+          methods: [ HttpMethod.ANY ],
+          integration: lambdaProxyIntegration,
+        }),
+        httpApi.addRoutes({
+          path: `/${lambdaFn.functionName}/{proxy+}`,
+          methods: [ HttpMethod.ANY ],
+          integration: lambdaProxyIntegration,
+        })
+      ]
       return {
         lambdaProxyIntegration,
         httpRoutes

@@ -15,8 +15,6 @@ Clone this project. It's yours now!
 
 The [cdk.ts](./src/cdk.ts) file contains a convenient wrapper around the `aws-cdk`.
 
-The [hello.ts](./src/hello.ts) function file is a plain old AWS Lambda Function handler.
-
 You can run this to deploy:
 
 ```shell
@@ -24,6 +22,13 @@ npm install && npm run deploy
 ```
 
 Just make sure you have AWS credentials locally as well as `node` and `npm`.
+
+The following examples will be deployed as part of a single CloudFormation stack:
+
+- [hello.ts](./src/examples/hello.ts), a plain old AWS Lambda Function handler
+- [goodbye.ts](./src/examples/goodbye.ts), a function that responds to api, queue, and table stream messages
+- [express.ts](./src/examples/express.ts), a function that is configured as an express app
+- [write.ts](./src/examples/write.ts), a function that writes to a DynamoDB table
 
 ## What does it do?
 

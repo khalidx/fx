@@ -3,7 +3,7 @@ import { NodejsFunction, NodejsFunctionProps } from '@aws-cdk/aws-lambda-nodejs'
 import { Queue, QueueProps } from '@aws-cdk/aws-sqs'
 import { SqsEventSource, DynamoEventSource, SqsDlq } from '@aws-cdk/aws-lambda-event-sources'
 import { StartingPosition } from '@aws-cdk/aws-lambda'
-import { Table, TableProps, AttributeType, StreamViewType } from '@aws-cdk/aws-dynamodb'
+import { Table, TableProps, AttributeType, StreamViewType, BillingMode } from '@aws-cdk/aws-dynamodb'
 import { LambdaProxyIntegration } from '@aws-cdk/aws-apigatewayv2-integrations'
 import { DomainName, DomainNameProps, HttpApi, HttpApiProps, HttpMethod } from '@aws-cdk/aws-apigatewayv2'
 import { ARecord, IHostedZone, RecordTarget } from '@aws-cdk/aws-route53'
@@ -48,6 +48,7 @@ const table =
   (scope: Construct) => {
     const tableResource = new Table(scope, `TableForLambdaFunction${lambdaFn.functionName}`, {
       partitionKey: { name: 'id', type: AttributeType.STRING },
+      billingMode: BillingMode.PAY_PER_REQUEST,
       stream: StreamViewType.NEW_IMAGE,
       ...props
     })

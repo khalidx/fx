@@ -93,6 +93,28 @@ const httpApi =
     }
   }
 
+const bucket =
+  (lambdaFns: Array<ReturnType<ReturnType<ReturnType<ReturnType<typeof lambdaFunction>>>>>) =>
+  (props?: Partial<BucketProps>) =>
+  (scope: Construct) => {
+    const bucketResource = new Bucket(scope, 'BucketForLambdaFunctions', {
+      encryption: BucketEncryption.KMS_MANAGED,
+      blockPublicAccess: new BlockPublicAccess({
+        blockPublicAcls: true,
+        blockPublicPolicy: true,
+        ignorePublicAcls: true,
+        restrictPublicBuckets: true
+      }),
+      ...props
+    })
+    lambdaFns.forEach(lambdaFn => {
+      bucketResource.grantReadWrite(lambdaFn.functionResource, `${lambdaFn.functionName}/*`)
+    })
+    return {
+      bucketResource
+    }
+  }
+
 const domain =
   (props: DomainNameProps) =>
   (zone: IHostedZone) =>
@@ -154,6 +176,7 @@ export const infrastructure =
     const domain = options && zone ? implementation.domain(options)(zone)(stack) : undefined
     const fns = functions.map(fn => fn(stack))
     const api = implementation.httpApi(fns.map(fn => fn.fn))(domain?.httpApiProps)(stack)
+    const bucket = implementation.bucket(fns.map(fn => fn.fn))()(stack)
     return {
       stack,
       fns,

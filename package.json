@@ -16,10 +16,13 @@
   "devDependencies": {
     "@aws-cdk/aws-apigatewayv2": "^1.75.0",
     "@aws-cdk/aws-apigatewayv2-integrations": "^1.75.0",
+    "@aws-cdk/aws-dynamodb": "^1.75.0",
+    "@aws-cdk/aws-lambda": "^1.75.0",
     "@aws-cdk/aws-lambda-event-sources": "^1.75.0",
     "@aws-cdk/aws-lambda-nodejs": "^1.75.0",
     "@aws-cdk/aws-route53": "^1.75.0",
     "@aws-cdk/aws-route53-targets": "^1.75.0",
+    "@aws-cdk/aws-s3": "^1.75.0",
     "@aws-cdk/aws-sqs": "^1.75.0",
     "@aws-cdk/core": "^1.75.0",
     "@types/aws-lambda": "^8.10.64",

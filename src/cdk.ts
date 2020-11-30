@@ -1,11 +1,14 @@
-import { App, Construct, Stack, StackProps, CfnOutput } from '@aws-cdk/core'
+import { App, Construct, Stack, StackProps, CfnOutput, Duration } from '@aws-cdk/core'
 import { NodejsFunction, NodejsFunctionProps } from '@aws-cdk/aws-lambda-nodejs'
 import { Queue, QueueProps } from '@aws-cdk/aws-sqs'
-import { SqsEventSource } from '@aws-cdk/aws-lambda-event-sources'
+import { SqsEventSource, DynamoEventSource, SqsDlq } from '@aws-cdk/aws-lambda-event-sources'
+import { StartingPosition } from '@aws-cdk/aws-lambda'
+import { Table, TableProps, AttributeType, StreamViewType } from '@aws-cdk/aws-dynamodb'
 import { LambdaProxyIntegration } from '@aws-cdk/aws-apigatewayv2-integrations'
 import { DomainName, DomainNameProps, HttpApi, HttpApiProps, HttpMethod } from '@aws-cdk/aws-apigatewayv2'
 import { ARecord, IHostedZone, RecordTarget } from '@aws-cdk/aws-route53'
 import { ApiGatewayv2Domain } from '@aws-cdk/aws-route53-targets'
+import { BlockPublicAccess, Bucket, BucketEncryption, BucketProps } from '@aws-cdk/aws-s3'
 
 import { basename, extname, resolve } from 'path'
 
@@ -184,7 +187,7 @@ const environment =
  * npx cdk --app "npx ts-node src/cdk.ts" deploy
  */
 export const infrastructure =
-  (functions: Array<ReturnType<typeof func>>, implementation = { httpApi, domain }) =>
+  (functions: Array<ReturnType<typeof func>>, implementation = { bucket, httpApi, domain, environment }) =>
   (options?: Parameters<typeof implementation.domain>[0]) =>
   (zone?: IHostedZone) =>
   (stackname: string | Construct) => {
@@ -210,7 +213,10 @@ export class FunctionStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props)
     infrastructure([
-      func('src/hello.ts')
+      func('src/examples/hello.ts'),
+      func('src/examples/goodbye.ts'),
+      func('src/examples/express.ts'),
+      func('src/examples/write.ts')
     ])()()(this)
   }
 }

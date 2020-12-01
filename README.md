@@ -29,6 +29,7 @@ The following examples will be deployed as part of a single CloudFormation stack
 - [goodbye.ts](./src/examples/goodbye.ts), a function that responds to api, queue, and table stream messages
 - [express.ts](./src/examples/express.ts), a function that is configured as an express app
 - [write.ts](./src/examples/write.ts), a function that writes to a DynamoDB table
+- [eval.ts](./src/examples/eval.ts), a function that spawns a process to evaluate a javascript expression
 
 ## What does it do?
 

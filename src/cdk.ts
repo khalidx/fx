@@ -217,7 +217,8 @@ export class FunctionStack extends Stack {
       func('src/examples/hello.ts'),
       func('src/examples/goodbye.ts'),
       func('src/examples/express.ts'),
-      func('src/examples/write.ts')
+      func('src/examples/write.ts'),
+      func('src/examples/eval.ts')
     ])()()(this)
   }
 }

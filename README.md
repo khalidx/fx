@@ -38,10 +38,15 @@ you some cloud goodness!
 
 > Every referenced function will be deployed
 > along with its associated cloud infrastructure
-> (API Gateway, SQS Queue).
+> (SQS Queue, DynamoDB Table).
 
-It deploys an API -> Lambda Function, so that you can respond to API requests.
-It deploys SQS -> Lambda Function, so you can react to queue events.
+> A single API Gateway HTTP API and S3 Bucket
+> will be created. Each function gets its own
+> route in the API and private path in the bucket.
+
+- It deploys an API -> Lambda Function, so that you can respond to API requests.
+- It deploys SQS -> Lambda Function, so you can react to queue events.
+- It deploys DynamoDB -> Lambda Function, so you can react to table stream events.
 
 All from the same function. A powerful paradigm and simple programming model.
 

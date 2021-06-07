@@ -26,7 +26,7 @@ Just make sure you have AWS credentials locally as well as `node` and `npm`.
 The following examples will be deployed as part of a single CloudFormation stack:
 
 - [hello.ts](./src/examples/hello.ts), a plain old AWS Lambda Function handler
-- [goodbye.ts](./src/examples/goodbye.ts), a function that responds to api, queue, and table stream messages
+- [multiple.ts](./src/examples/multiple.ts), a function that responds to api, queue, and table stream messages
 - [express.ts](./src/examples/express.ts), a function that is configured as an express app
 - [write.ts](./src/examples/write.ts), a function that writes to a DynamoDB table
 - [eval.ts](./src/examples/eval.ts), a function that spawns a process to evaluate a javascript expression

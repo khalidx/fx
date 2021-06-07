@@ -210,17 +210,50 @@ export const infrastructure =
     }
   }
 
+/**
+ * Can be used like `new FunctionStack(new App(), 'function-stack')` directly,
+ * but it's better to use the friendlier `stack()` method.
+ */
 export class FunctionStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props)
-    infrastructure([
-      func('src/examples/hello.ts'),
-      func('src/examples/goodbye.ts'),
-      func('src/examples/express.ts'),
-      func('src/examples/write.ts'),
-      func('src/examples/eval.ts')
-    ])()()(this)
+  }
+  functions (functions: Array<ReturnType<typeof func>>, implementation = { bucket, httpApi, domain, environment }) {
+    infrastructure(functions, implementation)()()(this)
+    return this
   }
 }
 
-new FunctionStack(new App(), 'function-stack')
+/**
+ * The only thing you need.
+ * 
+ * The only infrastructure you need for all your functions.
+ * 
+ * All your infrastructure and functions, a single method call away.
+ * 
+ * Example:
+ * 
+ * ```typescript
+ * stack().functions([
+ *   func('src/examples/hello.ts'),
+ *   func('src/examples/express.ts')
+ * ])
+ * ```
+ * 
+ * You can specify a specific name for your stack with:
+ * 
+ * ```typescript
+ * stack('function-stack').functions([...])
+ * ```
+ */
+export function stack (name: string = 'function-stack', app: App = new App()) {
+  return new FunctionStack(app, name)
+}
+
+stack().functions([
+  func('src/examples/hello.ts'),
+  func('src/examples/multiple.ts'),
+  func('src/examples/express.ts'),
+  func('src/examples/write.ts'),
+  func('src/examples/eval.ts')
+])

@@ -15,6 +15,8 @@ Clone this project. It's yours now!
 
 The [cdk.ts](./src/cdk.ts) file contains a convenient wrapper around the `aws-cdk`.
 
+The [router.ts](./src/router.ts) file contains a generic lambda handler that can handle any type of event.
+
 You can run this to deploy:
 
 ```shell
@@ -23,7 +25,7 @@ npm install && npm run deploy
 
 Just make sure you have AWS credentials locally as well as `node` and `npm`.
 
-The following examples will be deployed as part of a single CloudFormation stack:
+The following [examples](./src/examples/) will be deployed as part of a single CloudFormation stack:
 
 - [hello.ts](./src/examples/hello.ts), a plain old AWS Lambda Function handler
 - [multiple.ts](./src/examples/multiple.ts), a function that responds to api, queue, and table stream messages

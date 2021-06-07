@@ -1,8 +1,8 @@
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import { APIGatewayProxyHandlerV2 } from 'aws-lambda'
 
 import { execSync } from 'child_process'
 
-export const handler: APIGatewayProxyHandler = async () => {
+export const handler: APIGatewayProxyHandlerV2 = async () => {
   return {
     statusCode: 200,
     headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,6 @@
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import { APIGatewayProxyHandlerV2 } from 'aws-lambda'
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
+export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
   return {
     statusCode: 200,
     headers: {

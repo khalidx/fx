@@ -1,3 +1,5 @@
+![logo](./fx-logo.png)
+
 # fx
 
 Instantly deploy functions to the cloud.

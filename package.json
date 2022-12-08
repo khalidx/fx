@@ -10,7 +10,7 @@
     "diff:cdk": "cdk --app \"npx ts-node src/cdk.ts\" diff"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "serverless-http": "^2.6.0",
     "tslib": "^2.0.3",
     "uuid": "^8.3.1"

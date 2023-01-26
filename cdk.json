@@ -1,0 +1,10 @@
+{
+  "app": "npx ts-node src/infrastructure.ts",
+  "watch": {
+    "include": [
+      "src/**/*.ts",
+      "package*.json"
+    ]
+  },
+  "context": {}
+}

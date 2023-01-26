@@ -1,11 +1,11 @@
-import { Handler } from 'aws-lambda'
-import router from '../router'
+import router from '../lib/router'
+
 import { DynamoDB } from 'aws-sdk'
 import { v4 as uuid } from 'uuid'
 
 const dynamo = new DynamoDB.DocumentClient()
 
-export const handler: Handler = (event, context, callback) => router(event, context, callback, {
+export const handler = router({
   api: {
     proxyV2: async (event) => {
       if (event.requestContext.http.method === 'POST') {

@@ -1,5 +1,5 @@
-import { Handler } from 'aws-lambda'
-import router from '../router'
+import router from '../lib/router'
+
 import express from 'express'
 
 const app = express()
@@ -10,7 +10,7 @@ app.use((req, res) => {
   })
 })
 
-export const handler: Handler = (event, context, callback) => router(event, context, callback, {
+export const handler = router({
   api: {
     express: app
   }

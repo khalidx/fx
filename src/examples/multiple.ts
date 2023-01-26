@@ -1,7 +1,6 @@
-import { Handler } from 'aws-lambda'
-import router from '../router'
+import router from '../lib/router'
 
-export const handler: Handler = (event, context, callback) => router(event, context, callback, {
+export const handler = router({
   api: {
     proxyV2: async (event) => {
       console.log('http api event received', event.requestContext.requestId)

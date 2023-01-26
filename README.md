@@ -15,9 +15,9 @@ The fastest way to get a scalable service up and online.
 
 Clone this project. It's yours now! 
 
-The [cdk.ts](./src/cdk.ts) file contains a convenient wrapper around the `aws-cdk`.
+The [cdk.ts](./src/lib/cdk.ts) file contains a convenient wrapper around the `aws-cdk`.
 
-The [router.ts](./src/router.ts) file contains a generic lambda handler that can handle any type of event.
+The [router.ts](./src/lib/router.ts) file contains a generic lambda handler that can handle any type of event.
 
 You can run this to deploy:
 
@@ -54,9 +54,18 @@ you some cloud goodness!
 
 All from the same function. A powerful paradigm and simple programming model.
 
+All permissions are properly created and assigned as well. So:
+
+- Only a single Lambda Function can access its own DynamoDB table.
+- Multiple Lambda Functions can read from S3, but each function can only read from its own specific path in the bucket.
+
 ## How can I add more than one function?
 
-At the bottom of the `src/cdk.ts` file, just configure the paths to your lambda function entrypoints.
+In the `src/infrastructure.ts` file, just configure the paths to your lambda function entrypoints.
+
+## Diagram
+
+<img src="fx-drawio.png" alt="fx architecture diagram of components and features">
 
 ## Benchmarks
 
